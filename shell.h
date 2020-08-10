@@ -22,6 +22,10 @@
 #define Posicionar_Environ(environ)		\
 	while(*(*environ)++ != '=');
 
+#define Length_PATH(element, Length)			\
+	while(((element)->Path)[Length])		\
+		(Length)++;
+
 /*
  *  Variable environ.
  */

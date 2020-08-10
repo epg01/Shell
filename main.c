@@ -33,11 +33,40 @@ Data_Path()
 		if (**environ == ':')
 			(*environ)++;
 		temp[index] = '\0';
-		printf("Elemento insertado\n%s\n", temp);
 		return (temp);
 	}
 }
 
+int Ins_Next_Element(List *list, Element *element, char *Path)
+{
+	Element *New_Element;
+
+	if(!(New_Element = (Element *)malloc(sizeof(Element))))
+		return (-1);
+	New_Element->Path = Path;
+	Length_PATH(New_Element, (New_Element->Length_Path));
+	printf("Path:\n%s\n", New_Element->Path);
+	printf("Length:\n%i\n", New_Element->Length_Path);
+	if (!element)
+	{
+		if (!(list->Tail))
+			list->Tail = New_Element;
+		New_Element->Next  = list->Head;
+		list->Head         = New_Element;
+	}
+	else
+	{
+		if (!(element->Next))
+			list->Tail = New_Element;
+		New_Element        = element->Next;
+		element->Next      = New_Element;
+	}
+
+	(list->Size_List)++;
+	printf("Se creo el nodo\n");
+	sleep(4);
+	return (0);
+}
 void
 Get_Path(List *list)
 {
@@ -51,7 +80,7 @@ Get_Path(List *list)
 	printf("Procedemos a ingresar las rutas en la estructura de datos\n");
 
 	while(**environ)
-		Data_Path();
+		Ins_Next_Element(list, NULL,Data_Path());
 	printf("Se creo la base de datos, ahora procedemos a imprimir dichas rutas\n");
 }
 
