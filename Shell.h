@@ -51,4 +51,26 @@ struct List_
 typedef struct Element_ Element;
 typedef struct List_    List;
 
+/*
+ *  Funciones.
+ */
+
+char *
+Data_Path();
+
+void
+Get_Path(List *list);
+
+int
+Ins_Next_Element(List *list, Element *element, char *Path);
+
+void
+List_Init(List *list, void (*Destroy)(char *Path), void (*Execve)(char **Path));
+
+int
+Rem_Nex_Element(List *list, Element *element, char **Path);
+
+void
+List_Destroy(List *list);
+
 #endif
