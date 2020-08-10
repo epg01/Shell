@@ -30,6 +30,8 @@ Data_Path()
 		index = 0;
 		while(*(*environ) != ':' && **(environ))
 			temp[index++] = *(*environ)++;
+		if (**environ == ':')
+			(*environ)++;
 		temp[index] = '\0';
 		printf("Elemento insertado\n%s\n", temp);
 		return (temp);

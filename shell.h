@@ -8,6 +8,26 @@
 #include <signal.h>
 #include <sys/wait.h>
 
+/*
+ *  Macros.
+ */
+
+#define Posicionar_Path(environ)		\
+	while((*environ))			\
+		if((**environ) == 'P')		\
+			break;			\
+		else				\
+			(environ)++;
+
+#define Posicionar_Environ(environ)		\
+	while(*(*environ)++ != '=');
+
+/*
+ *  Variable environ.
+ */
+
+extern char **environ;
+
 struct Element_
 {
 	char *Path;
