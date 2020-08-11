@@ -1,5 +1,13 @@
 #include "Shell.h"
 
+/**
+ * Match - Function to check if the Path variable matches the second argument.
+ *         of the function.
+ * @Path: Variable to check if it matches the viable Key1.
+ * @Key1: Data that is analyzed if it matches or not with path.
+ * Return: Returns 0 on success, 1 otherwise.
+ */
+
 int
 Match(char *Path, char *Key1)
 {
@@ -11,11 +19,28 @@ Match(char *Path, char *Key1)
 		return (0);
 }
 
+/**
+ * Destroy - Function to destroy the data inserted in the Path variable
+ *           found in.
+ *           the structure, structure Element_
+ * @PATH: Function that destroys dynamically allocated memory in Path.
+ */
+
 void
 Destroy(char *PATH)
 {
 	free(PATH);
 }
+
+/**
+ * Execve - Function that creates a child by calling fork to be able to execute
+ *          the command (written without the path in the terminal).
+ * @Path: Non-relative path passed as the first argument, in order to correctly
+ *        execute the execve function.
+ * @argv: A double pointer that points to an array of pointers,
+ *        containing the command and arguments passed from the termianl.
+ * Return: Returns 0 on success, 1 otherwise.
+ */
 
 int
 Execve(char *Path, char **argv)
@@ -35,6 +60,12 @@ Execve(char *Path, char **argv)
 		wait(&status);
 	return (0);
 }
+
+/**
+ * main - Simple shell startup
+ * Return: 0 almost successful.
+ */
+
 int
 main(void)
 {
@@ -57,7 +88,7 @@ main(void)
 	 * Aparición de la shell.
 	 */
 
-	while(write(1, "$ ", 2) && getline(&String_Character, &Counter_Character, stdin) != EOF)
+	while (write(1, "$ ", 2) && getline(&String_Character, &Counter_Character, stdin) != EOF)
 	{
 		Analizar_String_Character(String_Character, &list);
 
@@ -67,5 +98,11 @@ main(void)
 	}
 	write(1, "\n", 1);
 
+	/*
+	 * Eliminamos la estructura creada recientemente.
+	 */
+
 	List_Destroy(&list);
+
+	return (0);
 }
