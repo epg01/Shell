@@ -37,14 +37,13 @@ main(void)
 	 * Aparición de la shell.
 	 */
 
-	write(1, "$ ", 2);
-	while(getline(&String_Character, &Counter_Character, stdin) != EOF)
+	while(write(1, "$ ", 2) && getline(&String_Character, &Counter_Character, stdin) != EOF)
 	{
 		Analizar_String_Character(String_Character, &list);
 
 		free(String_Character);
+		String_Character = NULL;
 		Counter_Character = 0;
-		write(1, "$ ", 2);
 	}
 	write(1, "\n", 1);
 

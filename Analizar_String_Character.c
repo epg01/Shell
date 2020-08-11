@@ -17,15 +17,34 @@ int Counter_Word(char *String)
 	return (Counter_Word);
 }
 
+int Execve_(char **argv)
+{
+	pid_t child_pid;
+	int status;
 
+	child_pid = fork();
+	if (child_pid == -1)
+	{
+		perror("Error:");
+		return (1);
+	}
+	if (child_pid == 0)
+	{
+		execve(*argv, argv, NULL);
+		sleep(3);
+	}
+	else
+	{
+		wait(&status);
+		return (0);
+	}
+}
 void Analizar_String_Character(char *String, List *list)
 {
 	int Counter_WORD;
 	char **argv;
 	int index = 1;
 	Element *element = element = list->Head;
-
-
 
 	Counter_WORD = Counter_Word(String);
 
@@ -42,17 +61,19 @@ void Analizar_String_Character(char *String, List *list)
 	{
 		if (!(list->Match(element->Path, *argv)))
 		{
-			printf("encontrado");
+			Execve_(argv);
+			break;
 		}
-		else if (!(list->Match(*argv, "env")))
+		else if (!(list->Match("env", *argv)))
 		{
-			while (*environ)
-				printf("%s\n", *environ++);
-			free (argv);
+			char **Temp = environ;
+			while (*Temp)
+				printf("%s\n", *Temp++);
 			break ;
 		}
 		else
-			printf("No encontrado\n");
+			;
 		element = element->Next;
 	}
+	free(argv);
 }
