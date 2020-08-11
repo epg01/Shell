@@ -46,6 +46,7 @@ struct List_
 	struct Element_ *Tail;
 	void (*Destroy)(char *Path);
 	void (*Execve)(char **Path);
+	int (*Match)(char *key1, char *key2);
 };
 
 typedef struct Element_ Element;
@@ -65,12 +66,15 @@ int
 Ins_Next_Element(List *list, Element *element, char *Path);
 
 void
-List_Init(List *list, void (*Destroy)(char *Path), void (*Execve)(char **Path));
+List_Init(List *list, void (*Destroy)(char *Path), void (*Execve)(char **Path), int (*Match)(char *Key1, char *Key2));
 
 int
 Rem_Nex_Element(List *list, Element *element, char **Path);
 
 void
 List_Destroy(List *list);
+
+void
+Analizar_String_Character(char *String, List *list);
 
 #endif
