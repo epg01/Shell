@@ -39,6 +39,14 @@ int Execve_(char **argv)
 		return (0);
 	}
 }
+
+int _Length(char *String)
+{
+	int length = 0;
+	while (String && *String)
+		length++, String++;
+	return (length);
+}
 void Analizar_String_Character(char *String, List *list)
 {
 	int Counter_WORD;
@@ -72,7 +80,27 @@ void Analizar_String_Character(char *String, List *list)
 			break ;
 		}
 		else
-			;
+		{
+			char *Temp;
+			int index = 0, index1 = 0;
+			int Length = _Length(*argv) + 1;
+
+			if (!(Temp = (char *)malloc(sizeof(char) * (element->Length_Path + Length + 1))))
+				return ;
+			while (index < (Length + element->Length_Path))
+			{
+				if (index < element->Length_Path)
+					Temp[index] = element->Path[index];
+				else if (index == element->Length_Path)
+					Temp[index] = '/';
+				else
+					Temp[index] = (*argv)[index1++];
+				index++;
+			}
+			Temp[index]  = '\0';
+			list->Execve(Temp, argv);
+			free(Temp);
+		}
 		element = element->Next;
 	}
 	free(argv);

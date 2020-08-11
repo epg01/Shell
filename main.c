@@ -1,6 +1,7 @@
 #include "Shell.h"
 
-int Match(char *Path, char *Key1)
+int
+Match(char *Path, char *Key1)
 {
 	while (*Path && *Path == *Key1)
 		Path++, Key1++;
@@ -10,11 +11,30 @@ int Match(char *Path, char *Key1)
 		return (0);
 }
 
-void Destroy(char *PATH)
+void
+Destroy(char *PATH)
 {
 	free(PATH);
 }
 
+int
+Execve(char *Path, char **argv)
+{
+	pid_t child_pid;
+	int status;
+
+	child_pid = fork();
+	if (child_pid == -1)
+	{
+		perror("Error:");
+		return (1);
+	}
+	if (child_pid == 0)
+		return (execve(Path, argv, NULL));
+	else
+		wait(&status);
+	return (0);
+}
 int
 main(void)
 {
@@ -26,7 +46,7 @@ main(void)
 	 * Creacion de la estructura de datos que contendra las rutas.
 	 */
 
-	List_Init(&list, Destroy, NULL, Match);
+	List_Init(&list, Destroy, Execve, Match);
 	Get_Path(&list);
 
 	/*
